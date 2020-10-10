@@ -61,8 +61,17 @@ cout << "importMaze from "<<file_name<<endl;
 	    return(true);
 }
 vector<string> Pathfinder::solveMaze(){
-    vector<string> strVec;
-    strVec.push_back("(x, y, z)");
+    isSolvable(maze, 0, 0, 0);
+	    for(auto s:solution) {
+		cout <<s<<endl;
+	    }
+        /*
+        if(solution.at(SIZE-1) == 3){
+            return maze;
+        }
+        */
+	    return solution;
+
     //Base Cases!
     // if (outside of maze || invalid path || have been here before)
     // strVec.pop_back();
@@ -73,5 +82,38 @@ vector<string> Pathfinder::solveMaze(){
 
     //maze[x][y][z] = 2;
     // if(up || down || left || right || in || out) We are on the right path
-    return strVec;
+}
+bool Pathfinder::isSolvable(int grid[SIZE][SIZE][SIZE], int d, int r, int c)
+ {
+	  cout << "find_maze_path ["<<r<<"]["<<c<<"]"<<endl;
+	  cout << this->toString();
+	  if (r < 0 || c < 0 || r >= SIZE || c >= SIZE)
+	    return false;      // Cell is out of bounds.
+	  else if (grid[d][r][c] != 1)
+	    return false;      // Cell is on barrier or dead end.
+	  else if (r == SIZE - 1 && c == SIZE - 1) {
+	    grid[d][r][c] = 3;         // Cell is on path
+	    solution.push_back("("+to_string(r)+","+to_string(c)+")");
+	    return true;               // and is maze exit.
+	  }
+	  else { 
+	    // Recursive case.
+	    // Attempt to find a path from each neighbor.
+	    // Tentatively mark cell as on path.
+	    grid[d][r][c] = 3;
+	    if (isSolvable(grid, d, r - 1, c) // North
+	        || isSolvable(grid, d, r + 1, c) // South
+	        || isSolvable(grid, d, r, c - 1) // Left
+	        || isSolvable(grid, d, r, c + 1 ) // Right
+            || isSolvable(grid, d+1, r, c) // Up
+            || isSolvable(grid, d-1, r, c) // Down
+            ) { 
+	      solution.push_back("(" + to_string(d) + "," +to_string(r)+","+to_string(c)+")");
+	      return true;
+	    }
+	    else {
+	      grid[d][r][c] = 2;  // Dead end.
+	      return false;
+	    }
+	  }
 }

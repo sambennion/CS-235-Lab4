@@ -10,9 +10,17 @@ class Pathfinder: public PathfinderInterface
 {
 private:
 int maze [SIZE][SIZE][SIZE];
-vector<int> solution;
+vector<string> solution;
 public:
-	Pathfinder() {}
+	Pathfinder() {
+        for(int i = 0; i < SIZE; i++){
+            for(int j = 0; j < SIZE; j++){
+                for(int k = 0; k < SIZE; k++){
+                    maze[i][j][k] = 1;
+                }
+            }
+        }
+    }
 	virtual ~Pathfinder() {}
 
 	//Part 1-----------------------------------------------------------------------------------
@@ -87,4 +95,5 @@ public:
 	*/
 	vector<string> solveMaze();
 	//-----------------------------------------------------------------------------------------
+    bool isSolvable(int grid[SIZE][SIZE][SIZE], int d, int r, int c);
 };
