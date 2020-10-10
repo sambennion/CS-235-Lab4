@@ -2,6 +2,7 @@
 #include "PathfinderInterface.h"
 #include <sstream>
 #include <fstream>
+#include <algorithm>
 using namespace std;
 
 const int SIZE = 5;
