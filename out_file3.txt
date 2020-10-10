@@ -1,0 +1,21 @@
+importMaze Mazes/Solvable1.txt False
+toString
+48 
+solveMaze INVALID path given, path must begin at cell (0, 0, 0)
+Path Given:
+(x, y, z)
+
+importMaze Mazes/Solvable2.txt False
+toString
+48 
+solveMaze INVALID path given, path must begin at cell (0, 0, 0)
+Path Given:
+(x, y, z)
+
+importMaze Mazes/Solvable3.txt False
+toString
+49 
+solveMaze INVALID path given, path must begin at cell (0, 0, 0)
+Path Given:
+(x, y, z)
+

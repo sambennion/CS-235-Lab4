@@ -1,0 +1,15 @@
+importMaze Mazes/Unsolvable1.txt False
+solveMaze INVALID path given, path must begin at cell (0, 0, 0)
+Path Given:
+(x, y, z)
+
+importMaze Mazes/Unsolvable2.txt False
+solveMaze INVALID path given, path must begin at cell (0, 0, 0)
+Path Given:
+(x, y, z)
+
+importMaze Mazes/Unsolvable3.txt False
+solveMaze INVALID path given, path must begin at cell (0, 0, 0)
+Path Given:
+(x, y, z)
+

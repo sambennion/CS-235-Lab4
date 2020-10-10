@@ -11,7 +11,6 @@ class Pathfinder: public PathfinderInterface
 private:
 
 int maze [SIZE][SIZE][SIZE];
-
 public:
 	Pathfinder() {}
 	virtual ~Pathfinder() {}
@@ -36,7 +35,7 @@ public:
 	* Returns:		string
 	*				A single string representing the current maze
 	*/
-	virtual string toString();
+	string toString() const;
 
 	/*
 	* createRandomMaze

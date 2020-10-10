@@ -1,13 +1,14 @@
 #include "Pathfinder.h"
+#include <algorithm>
 using namespace std;
 
 
- string Pathfinder::toString(){
+ string Pathfinder::toString() const{
     stringstream ss;
     string strMaze = "";
-    for(int i = 0; i < 5; i++){
-        for(int j = 0; j < 5; j++){
-            for(int k = 0; k < 5; k++){
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            for(int k = 0; k < SIZE; k++){
                 ss << maze[i][j][k] << " ";
                 ss >> strMaze;
             }
@@ -18,9 +19,9 @@ using namespace std;
 }
 void Pathfinder::createRandomMaze(){
     srand(time(NULL));
-    for(int i = 0; i < 5; i++){
-        for(int j = 0; j < 5; j++){
-            for(int k = 0; k < 5; k++){
+    for(int i = 0; i < SIZE; i++){
+        for(int j = 0; j < SIZE; j++){
+            for(int k = 0; k < SIZE; k++){
                 maze[i][j][k] = rand() % 2;
             }
         }
@@ -32,8 +33,7 @@ void Pathfinder::createRandomMaze(){
 bool Pathfinder::importMaze(string file_name){
     ifstream ifs;
   string line;
-  int x, y = 0;
-  string boardValues[SIZE][SIZE][SIZE];
+  
 
   // Open file
   ifs.open(file_name, ifstream::in);
@@ -42,25 +42,35 @@ bool Pathfinder::importMaze(string file_name){
     cout << "file " << file_name << " failed to open" << endl;
     return false;
   }
-
-  for(y = 0; y < SIZE; y++)
+   
+        
+  int i, j, k;
+  for(i = 0; i < SIZE; i++)
   {
     getline(ifs, line);
     if(ifs.bad() || ifs.fail())
     {
-      cout << "line read fail" << endl;
-      return false;
+    cout << "line read fail" << endl;
+    return false;
     }
+    //cout << line << endl;
     while(line[line.size()-1] == ' ' || line[line.size()-1] == '\n' || line[line.size()-1] == '\r')
-      line = line.substr(0, line.size()-1);
+        line = line.substr(0, line.size()-1);
+    //cout << line << " ";
+    //cout << line.size() << endl;
     if(line.size() != SIZE*2-1)
     {
-      cout << "line wrong size: actual " << line.size() << ", expected: " << SIZE*2-1 << endl;
-      return false;
+        cout << "line wrong size: actual " << line.size() << ", expected: " << SIZE*2-1 << endl;
+        return false;
     }
-    for(x = 0; x < SIZE; x++)
+    for(j = 0; j < SIZE; j++)
     {
-      boardValues[x][y] = line[x*2];
+        for(k = 0; k < SIZE*2; k+=2){
+               cout << line[k] << endl;
+            maze[i][j][k] = line[k];
+            //cout << maze[i][j][k] << endl;
+        }
+      
     }
   }
 
@@ -72,11 +82,10 @@ bool Pathfinder::importMaze(string file_name){
     return false;
   }
 
-  setBoard(boardValues);
   return true;
 }
 vector<string> Pathfinder::solveMaze(){
-    vector<string> strVec = {""};
+    vector<string> strVec;
     strVec.push_back("(x, y, z)");
     //Base Cases!
     // if (outside of maze || invalid path || have been here before)
