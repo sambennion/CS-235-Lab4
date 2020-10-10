@@ -9,8 +9,8 @@ const int SIZE = 5;
 class Pathfinder: public PathfinderInterface
 {
 private:
-
 int maze [SIZE][SIZE][SIZE];
+vector<int> solution;
 public:
 	Pathfinder() {}
 	virtual ~Pathfinder() {}
