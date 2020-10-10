@@ -11,6 +11,7 @@ class Pathfinder: public PathfinderInterface
 {
 private:
 int maze [SIZE][SIZE][SIZE];
+bool isSolved = false;
 vector<string> solution;
 public:
 	Pathfinder() {

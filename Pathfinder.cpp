@@ -98,41 +98,31 @@ vector<string> Pathfinder::solveMaze(){
             }
         }
     }
-    
+    isSolved = false;
     isSolvable(tempMaze, 0, 0, 0);
-	    for(auto s:solution) {
-		//cout <<s<<endl;
-	    }
-        /*
-        if(solution.at(SIZE-1) == 3){
-            return maze;
-        }
-        */
+	    
         reverse(solution.begin(),solution.end());
-	    return solution;
+        vector<string> revisedSolution;
+        for(int i = 0; i < solution.size(); i++){
+            revisedSolution.push_back(solution[i]);
+            if (solution[i] == "(4, 4, 4)"){
+                break;
+            }
+        }
+	    return revisedSolution;
 
-    //Base Cases!
-    // if (outside of maze || invalid path || have been here before)
-    // strVec.pop_back();
-    // return false
-
-    //if(end of maze)
-    // return true;
-
-    //maze[x][y][z] = 2;
-    // if(up || down || left || right || in || out) We are on the right path
 }
 bool Pathfinder::isSolvable(int grid[SIZE][SIZE][SIZE], int d, int r, int c)
- {
-	  //cout << "find_maze_path ["<<r<<"]["<<c<<"]"<<endl;
-	  //cout << this->toString();
-	  if (r < 0 || c < 0 || r >= SIZE || c >= SIZE)
+ {  
+
+       if (d < 0 || r < 0 || c < 0 || r >= SIZE || c >= SIZE || d>=SIZE)
 	    return false;      // Cell is out of bounds.
 	  else if (grid[d][r][c] != 1)
 	    return false;      // Cell is on barrier or dead end.
-	  else if (r == SIZE - 1 && c == SIZE - 1) {
+	  else if (d == SIZE - 1 && r == SIZE - 1 && c == SIZE - 1) {
 	    grid[d][r][c] = 3;         // Cell is on path
-	    solution.push_back("("+ to_string(d) + ", "+to_string(r)+", "+to_string(c)+")");
+	    solution.push_back("("+ to_string(c) + ", "+to_string(r)+", "+to_string(d)+")");
+        isSolved = true;
 	    return true;               // and is maze exit.
 	  }
 	  else { 
@@ -147,7 +137,7 @@ bool Pathfinder::isSolvable(int grid[SIZE][SIZE][SIZE], int d, int r, int c)
             || isSolvable(grid, d+1, r, c) // Up
             || isSolvable(grid, d-1, r, c) // Down
             ) { 
-	      solution.push_back("(" + to_string(d) + ", " +to_string(r)+", "+to_string(c)+")");
+          solution.push_back("(" + to_string(c) + ", " + to_string(r)+", "+to_string(d)+")");
 	      return true;
 	    }
 	    else {
@@ -155,4 +145,6 @@ bool Pathfinder::isSolvable(int grid[SIZE][SIZE][SIZE], int d, int r, int c)
 	      return false;
 	    }
 	  }
-}
+      }
+      
+	  
